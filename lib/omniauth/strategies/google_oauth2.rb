@@ -39,7 +39,7 @@ module OmniAuth
       end
 
       info do
-        if user_data['isVerified']
+        if user_data['verified_email']
           email = user_data['email'] rescue nil
         else
           email = nil
@@ -48,8 +48,7 @@ module OmniAuth
         {
           'email' => email,
           'uid' => email,
-          'name' => user_data['name'] || email,
-          'data' => user_data
+          'name' => user_data['name'] || email
         }
       end
 
