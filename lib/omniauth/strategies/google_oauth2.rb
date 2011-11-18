@@ -39,8 +39,8 @@ module OmniAuth
       end
 
       info do
-        if user_data['data']['isVerified']
-          email = user_data['data']['email'] rescue nil
+        if user_data['isVerified']
+          email = user_data['email'] rescue nil
         else
           email = nil
         end
@@ -48,12 +48,13 @@ module OmniAuth
         {
           'email' => email,
           'uid' => email,
-          'name' => email
+          'name' => user_data['name'] || email,
+          'data' => user_data
         }
       end
 
       def user_data
-        @data ||= access_token.get("https://www.googleapis.com/userinfo/email?alt=json").parsed
+        @data ||= access_token.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json").parsed
       end
     end
   end
